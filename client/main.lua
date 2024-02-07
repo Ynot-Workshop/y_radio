@@ -1,10 +1,10 @@
-local config = require 'config.shared'
+local config = require 'config.client'
+local sharedConfig = require 'config.shared'
 local radioMenu = false
 local onRadio = false
 local radioChannel = 0
 local radioVolume = 50
-local hasRadio = false
-local radioProp = nil
+local micClicks = true
 
 local function connectToRadio(channel)
     radioChannel = channel
@@ -28,49 +28,30 @@ local function connectToRadio(channel)
 end
 
 local function leaveradio()
-    qbx.playAudio({
-        audioName = 'End_Squelch',
-        audioRef = 'CB_RADIO_SFX',
-        source = cache.ped
-    })
+    if onRadio then
+        qbx.playAudio({
+            audioName = 'End_Squelch',
+            audioRef = 'CB_RADIO_SFX',
+            source = cache.ped
+        })
+        exports.qbx_core:Notify(locale('left_channel'), 'error')
+    end
     radioChannel = 0
     onRadio = false
     exports['pma-voice']:setRadioChannel(0)
     exports['pma-voice']:setVoiceProperty('radioEnabled', false)
-    exports.qbx_core:Notify(locale('left_channel'), 'error')
-end
-
-local function toggleRadioAnimation(pState)
-    lib.requestAnimDict('cellphone@')
-	if pState then
-		TriggerEvent('attachItemRadio','radio01')
-		TaskPlayAnim(cache.ped, 'cellphone@', 'cellphone_text_read_base', 2.0, 3.0, -1, 49, 0, 0, 0, 0)
-		radioProp = CreateObject(`prop_cs_hand_radio`, 1.0, 1.0, 1.0, 1, 1, 0)
-		AttachEntityToEntity(radioProp, cache.ped, GetPedBoneIndex(cache.ped, 57005), 0.14, 0.01, -0.02, 110.0, 120.0, -15.0, 1, 0, 0, 0, 2, 1)
-	else
-		StopAnimTask(cache.ped, 'cellphone@', 'cellphone_text_read_base', 1.0)
-		ClearPedTasks(cache.ped)
-		if radioProp ~= 0 then
-			DeleteObject(radioProp)
-			radioProp = 0
-		end
-	end
 end
 
 local function toggleRadio(toggle)
     radioMenu = toggle
     SetNuiFocus(radioMenu, radioMenu)
     if radioMenu then
-        toggleRadioAnimation(true)
+        exports.scully_emotemenu:playEmoteByCommand('wt')
         SendNUIMessage({type = 'open'})
     else
-        toggleRadioAnimation(false)
+        exports.scully_emotemenu:cancelEmote()
         SendNUIMessage({type = 'close'})
     end
-end
-
-local function doRadioCheck()
-    hasRadio = exports.ox_inventory:Search('count', 'radio') > 0
 end
 
 local function isRadioOn()
@@ -79,26 +60,16 @@ end
 
 exports('IsRadioOn', isRadioOn)
 
--- Handles state right when the player selects their character and location.
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
-    doRadioCheck()
-end)
-
 -- Resets state on logout, in case of character change.
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
-    hasRadio = false
     leaveradio()
 end)
 
 AddEventHandler('ox_inventory:itemCount', function(itemName, totalCount)
     if itemName ~= 'radio' then return end
-    hasRadio = totalCount > 0
-end)
-
--- Handles state if resource is restarted live.
-AddEventHandler('onResourceStart', function(resource)
-    if GetCurrentResourceName() ~= resource then return end
-    doRadioCheck()
+    if totalCount <= 0 and radioChannel ~= 0 then
+        leaveradio()
+    end
 end)
 
 RegisterNetEvent('qbx_radio:client:use', function()
@@ -126,8 +97,8 @@ RegisterNUICallback('joinRadio', function(data, cb)
         return
     end
 
-    local frequency = not config.whitelistSubChannels and math.floor(rchannel) or rchannel
-    if config.restrictedChannels[frequency] and (not config.restrictedChannels[frequency][QBX.PlayerData.job.name] or not QBX.PlayerData.job.onduty) then
+    local frequency = not sharedConfig.whitelistSubChannels and math.floor(rchannel) or rchannel
+    if sharedConfig.restrictedChannels[frequency] and (not sharedConfig.restrictedChannels[frequency][QBX.PlayerData.job.name] or not QBX.PlayerData.job.onduty) then
         exports.qbx_core:Notify(locale('restricted_channel'), 'error')
         cb('ok')
         return
@@ -149,7 +120,7 @@ RegisterNUICallback('volumeUp', function(_, cb)
 	if not onRadio then return cb('ok') end
 	if radioVolume > 95 then
         exports.qbx_core:Notify(locale('max_volume'), 'error')
-		return
+	    return
 	end
 
 	radioVolume += 5
@@ -161,8 +132,8 @@ end)
 RegisterNUICallback('volumeDown', function(_, cb)
 	if not onRadio then return cb('ok') end
 	if radioVolume < 10 then
-		exports.qbx_core:Notify(locale('min_volume'), 'error')
-        return
+        exports.qbx_core:Notify(locale('min_volume'), 'error')
+		return
 	end
 
 	radioVolume -= 5
@@ -189,6 +160,18 @@ RegisterNUICallback('decreaseradiochannel', function(_, cb)
 	cb('ok')
 end)
 
+RegisterNUICallback('toggleClicks', function(_, cb)
+    micClicks = not micClicks
+    exports['pma-voice']:setVoiceProperty("micClicks", micClicks)
+    qbx.playAudio({
+        audioName = "Off_High",
+        audioRef = 'MP_RADIO_SFX',
+        source = cache.ped
+    })
+    exports.qbx_core:Notify(locale('clicks'..(micClicks and 'On' or 'Off')), micClicks and 'success' or 'error')
+    cb('ok')
+end)
+
 RegisterNUICallback('poweredOff', function(_, cb)
     leaveradio()
     cb('ok')
@@ -199,15 +182,10 @@ RegisterNUICallback('escape', function(_, cb)
     cb('ok')
 end)
 
-CreateThread(function()
-    while true do
-        Wait(1000)
-        if LocalPlayer.state.isLoggedIn and onRadio then
-            if not hasRadio or QBX.PlayerData.metadata.isdead or QBX.PlayerData.metadata.inlaststand then
-                if radioChannel ~= 0 then
-                    leaveradio()
-                end
-            end
+if config.leaveOnDeath then
+    AddStateBagChangeHandler('isDead', ('player:%s'):format(cache.serverId), function(_, _, value)
+        if value and onRadio and radioChannel ~= 0 then
+            leaveradio()
         end
-    end
-end)
+    end)
+end
