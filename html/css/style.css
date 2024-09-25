@@ -144,7 +144,7 @@ body {
 	background: none;
 	outline: none;
 	font-family: 'Fira Code', monospace;
-	width: 5vw;
+	width: 5ch;
 }
 
 ::-webkit-inner-spin-button {

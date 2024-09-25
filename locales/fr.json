@@ -10,5 +10,18 @@
     "new_volume": "Nouveau volume : ",
     "new_channel": "Nouvelle fréquence : ",
     "clicksOn": "Clicks radio activés",
-    "clicksOff": "Clicks radio désactivés"
+    "clicksOff": "Clicks radio désactivés",
+    "no_radio": "Vous n'avez pas de radio",
+    "open_radio": "Ouvrir la radio",
+    "ui": {
+        "toggleClicks": "Activer/Désactiver les clicks radio",
+        "channel": "Fréquence Radio",
+        "submit": "Valider",
+        "disconnect": "Déconnecter",
+        "volumeUp": "Augmenter le volume",
+        "volumeDown": "Diminuer le volume",
+        "increaseradiochannel": "Incrémenter la fréquence radio",
+        "decreaseradiochannel": "Décrémenter la fréquence radio",
+        "powerButton": "Allumer/Eteindre"
+    }
 }

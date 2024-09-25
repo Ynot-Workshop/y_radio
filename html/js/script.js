@@ -1,13 +1,35 @@
-let QBRadio = {};
-
 window.addEventListener('DOMContentLoaded', function () {
+    function SlideUp() {
+        document.getElementById("container").style.display = "block";
+        document.getElementById("radio-container").animate({ bottom: "6vh" }, 250).onfinish = function () {
+            document.getElementById("radio-container").style.bottom = "6vh";
+        };
+    };
+
+    function SlideDown() {
+        document.getElementById("radio-container").animate({ bottom: "-110vh" }, 400).onfinish = function () {
+            document.getElementById("container").style.display = "none";
+            document.getElementById("radio-container").style.bottom = "-56vh";
+        };
+    };
+
     window.addEventListener('message', function (event) {
         if (event.data.type == "open") {
-            QBRadio.SlideUp();
+            SlideUp();
         }
 
         if (event.data.type == "close") {
-            QBRadio.SlideDown();
+            SlideDown();
+        }
+    });
+
+    fetch(`https://${GetParentResourceName()}/getButtonLocales`, {
+        method: 'POST',
+    }).then(response => response.json()).then(buttons => {
+        for (const button in buttons) {
+            tippy(`#${button}`, {
+                content: buttons[button],
+            });
         }
     });
 
@@ -17,7 +39,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 method: 'POST',
                 body: JSON.stringify({})
             });
-            QBRadio.SlideDown();
+            SlideDown();
         } else if (data.key == "Enter") {
             fetch(`https://${GetParentResourceName()}/joinRadio`, {
                 method: 'POST',
@@ -115,17 +137,4 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-    QBRadio.SlideUp = function () {
-        document.getElementById("container").style.display = "block";
-        document.getElementById("radio-container").animate({ bottom: "6vh" }, 250).onfinish = function () {
-            document.getElementById("radio-container").style.bottom = "6vh";
-        };
-    };
-
-    QBRadio.SlideDown = function () {
-        document.getElementById("radio-container").animate({ bottom: "-110vh" }, 400).onfinish = function () {
-            document.getElementById("container").style.display = "none";
-        };
-    };
 });

@@ -10,5 +10,18 @@
     "new_volume": "New volume: ",
     "new_channel": "New channel: ",
     "clicksOn": "Mic clicks are now on",
-    "clicksOff": "Mic clicks are now off"
+    "clicksOff": "Mic clicks are now off",
+    "no_radio": "You don't have a radio",
+    "open_radio": "Open Radio",
+    "ui": {
+        "toggleClicks": "Toggle mic clicks",
+        "channel": "Radio Channel",
+        "submit": "Submit",
+        "disconnect": "Disconnect",
+        "volumeUp": "Increase volume",
+        "volumeDown": "Decrease volume",
+        "increaseradiochannel": "Increase radio channel",
+        "decreaseradiochannel": "Decrease radio channel",
+        "powerButton": "Power On/Off"
+    }
 }

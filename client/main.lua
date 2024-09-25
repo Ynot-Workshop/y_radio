@@ -96,6 +96,20 @@ RegisterNetEvent('qbx_radio:client:onRadioDrop', function()
     end
 end)
 
+RegisterNuiCallback('getButtonLocales', function (_, cb)
+    cb({
+        toggleClicks = locale('ui.toggleClicks'),
+        channel = locale('ui.channel'),
+        submit = locale('ui.submit'),
+        disconnect = locale('ui.disconnect'),
+        volumeUp = locale('ui.volumeUp'),
+        volumeDown = locale('ui.volumeDown'),
+        increaseradiochannel = locale('ui.increaseradiochannel'),
+        decreaseradiochannel = locale('ui.decreaseradiochannel'),
+        powerButton = locale('ui.powerButton'),
+    })
+end)
+
 RegisterNUICallback('joinRadio', function(data, cb)
     if not onRadio then return cb('ok') end
     local rchannel = tonumber(data.channel)
