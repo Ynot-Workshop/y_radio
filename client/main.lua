@@ -211,3 +211,17 @@ if config.leaveOnDeath then
         end
     end)
 end
+
+lib.addKeybind({
+    name = 'radio',
+    description = locale('open_radio'),
+    defaultkey = 'P',
+    onPressed = function(self)
+        if not exports.ox_inventory:GetItemCount('radio') then
+            exports.qbx_core:Notify(locale('no_radio'), 'error')
+            return
+        end
+
+        toggleRadio(not radioMenu)
+    end
+})
