@@ -9,5 +9,5 @@ return {
     decimalPlaces = 2,
 
     -- Should the mic clicks be enabled by default
-    defaultMicClicks = true
+    defaultMicClicks = GetResourceKvpInt('mic_clicks') == 1,
 }
