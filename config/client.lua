@@ -1,5 +1,5 @@
 return {
-    maxFrequency = 130, -- Max amount of available channel frequencies to use
+    maxFrequency = 500, -- Max amount of available channel frequencies to use
 
     -- Should the radio turn off when the player is dead (Talking is disabled anyway)
     leaveOnDeath = false,

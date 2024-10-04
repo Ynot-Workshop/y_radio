@@ -6,124 +6,45 @@ return {
     ---@type table<channelNumber, {jobName: boolean, jobName2: boolean}>
     ---Table of all restricted channels and the jobs that can use them
     restrictedChannels = {
-        [100] = {
+        [1] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [101] = {
+        [2] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [102] = {
+        [3] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [103] = {
+        [4] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [104] = {
+        [5] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [105] = {
+        [6] = {
             police = true,
-            sheriff = true,
+            ambulance = true
         },
-        [106] = {
+        [7] = {
             police = true,
+            ambulance = true
         },
-        [107] = {
+        [8] = {
             police = true,
+            ambulance = true
         },
-        [108] = {
+        [9] = {
             police = true,
+            ambulance = true
         },
-        [109] = {
+        [10] = {
             police = true,
-        },
-        [110] = {
-            police = true,
-        },
-        [111] = {
-            sheriff = true,
-        },
-        [112] = {
-            sheriff = true,
-        },
-        [113] = {
-            sheriff = true,
-        },
-        [114] = {
-            sheriff = true,
-        },
-        [115] = {
-            sheriff = true,
-        },
-        [116] = {
-            ambulance = true,
-        },
-        [117] = {
-            ambulance = true,
-        },
-        [118] = {
-            ambulance = true,
-        },
-        [119] = {
-            ambulance = true,
-        },
-        [120] = {
-            ambulance = true,
-        },
-        [121] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [122] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [123] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [124] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [125] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [126] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [127] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [128] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [129] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
-        [130] = {
-            police = true,
-            sheriff = true,
-            ambulance = true,
-        },
+            ambulance = true
+        }
     }
 }
