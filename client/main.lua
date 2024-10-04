@@ -193,6 +193,7 @@ end)
 RegisterNUICallback('toggleClicks', function(_, cb)
     if not onRadio then return cb('ok') end
     micClicks = not micClicks
+    SetResourceKvpInt('micClicks', micClicks and 1 or 0)
     exports['pma-voice']:setVoiceProperty("micClicks", micClicks)
     qbx.playAudio({
         audioName = "Off_High",
