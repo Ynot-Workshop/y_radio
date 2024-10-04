@@ -2,7 +2,7 @@
 
 body {
 	position: relative;
-	font-family: sans-serif;
+	font-family: 'Fira Code', monospace;
 	overflow: hidden;
 	top: 0;
 	padding: 0;
@@ -17,7 +17,7 @@ body {
 #radio-container {
 	position: absolute;
 	bottom: -56vh;
-	right: 15vh;
+	right: 10vh;
 }
 
 .radio {
@@ -30,7 +30,9 @@ body {
 }
 
 #submit,
-#disconnect {
+#disconnect,
+#increaseradiochannel,
+#decreaseradiochannel {
 	position: absolute;
 	width: 2.2vh;
 	height: 3.2vh;
@@ -84,9 +86,7 @@ body {
 }
 
 #volumeDown,
-#volumeUp,
-#increaseradiochannel,
-#decreaseradiochannel {
+#volumeUp {
 	position: absolute;
 	width: 3.3vh;
 	height: 1.9vh;
@@ -123,8 +123,8 @@ body {
 .channel {
     display: none;
 	position: absolute;
-	bottom: 24vh;
-	left: 5.3vh;
+	bottom: 24.75vh;
+	left: 4.35vh;
 	background: none;
 }
 
@@ -137,14 +137,16 @@ body {
 	color: rgba(0, 0, 0, 0.75);
 }
 
-.channel input {
-	text-align: center;
-	border: none;
-	font-size: 25px;
-	background: none;
-	outline: none;
-	font-family: 'Fira Code', monospace;
-	width: 5ch;
+.channel, #channel {
+    text-align: center;
+    border: none;
+    font-size: 1.15rem;
+    background: none;
+    outline: none;
+    width: 10ch;
+}
+#channel {
+    width: 6ch;
 }
 
 ::-webkit-inner-spin-button {

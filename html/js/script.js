@@ -57,6 +57,15 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    document.getElementById('channel').addEventListener('input', function (e) {
+        const value = e.target.value;
+        const regex = /^\d{0,3}(\.\d{0,2})?$/;
+
+        if (!regex.test(value)) {
+          e.target.value = value.slice(0, -1);
+        }
+      });
+
     document.getElementById('submit').addEventListener('click', function (e) {
         e.preventDefault();
         fetch(`https://${GetParentResourceName()}/joinRadio`, {
