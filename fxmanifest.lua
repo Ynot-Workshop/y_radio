@@ -3,7 +3,7 @@ game 'gta5'
 
 description 'y_radio'
 repository 'https://github.com/Ybox-project/y_radio'
-version '1.0.1'
+version '1.0.2'
 
 ox_lib 'locale'
 shared_scripts {
