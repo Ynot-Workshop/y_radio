@@ -237,6 +237,11 @@ lib.addKeybind({
             return
         end
 
+        -- Prevents conflicting with other UIs
+        if IsNuiFocused() then
+            return
+        end
+
         toggleRadio(not radioMenu)
     end
 })
