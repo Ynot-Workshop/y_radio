@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'y_radio'
-repository 'https://github.com/Ybox-project/y_radio'
+repository 'https://github.com/ynot-workshop/y_radio'
 version '1.0.2'
 
 ox_lib 'locale'

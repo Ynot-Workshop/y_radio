@@ -1,4 +1,4 @@
-lib.versionCheck('Ybox-Project/y_radio')
+lib.versionCheck('ynot-workshop/y_radio')
 
 local config = require 'config.shared'
 local restrictedChannels = config.restrictedChannels
